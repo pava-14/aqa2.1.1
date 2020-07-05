@@ -12,7 +12,7 @@ public class CreditCardOrderTest {
     @Test
     public void shouldCreditCardOrder() {
         open("http://localhost:9999");
-        SelenideElement form = $("form1");
+        SelenideElement form = $("form");
         form.$("[data-test-id=name] input").setValue("Петров Иван Петрович");
         form.$("[data-test-id=phone] input").setValue("+79099099090");
         form.$("[data-test-id=agreement]").click();
