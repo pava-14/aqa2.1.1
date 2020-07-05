@@ -1,23 +1,52 @@
 package ru.netology.order;
 
-import com.codeborne.selenide.SelenideElement;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreditCardOrderTest {
+    private WebDriver driver;
+
+    @BeforeAll
+    static void setUpAll() {
+        System.setProperty("webdriver.chrome.driver", "..\\webdriver\\chromedriver.exe");
+    }
+
+    @BeforeEach
+    void setUp() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+    }
+
+    @AfterEach
+    void tearDown() {
+        driver.quit();
+        driver = null;
+    }
 
     @Test
-    public void shouldCreditCardOrder() {
-        open("http://localhost:9999");
-        SelenideElement form = $("form");
-        form.$("[data-test-id=name] input").setValue("Петров Иван Петрович");
-        form.$("[data-test-id=phone] input").setValue("+79099099090");
-        form.$("[data-test-id=agreement]").click();
-        form.$("button[type=button]").click();
-        $("[data-test-id=order-success]")
-                .shouldHave(exactText("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
+    public void shouldCreditCardOrderSuccess() {
+        driver.get("http://localhost:9999");
+
+        WebElement form = driver.findElement(By.cssSelector("form"));
+        form.findElement(By.cssSelector(
+                "[data-test-id=name] input")).sendKeys("Иванов Иван Петрович");
+        form.findElement(By.cssSelector(
+                "[data-test-id=phone] input")).sendKeys("+79099009090");
+        form.findElement(By.cssSelector("[data-test-id=agreement]")).click();
+        form.findElement(By.cssSelector("button[type=button]")).click();
+        String text = driver.findElement(By.cssSelector(
+                "[data-test-id=order-success]")).getText();
+
+        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", text.trim());
     }
 }
