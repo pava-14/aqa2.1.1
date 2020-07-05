@@ -6,4 +6,4 @@
 2. Создан тестовый класс
 3. Настроен CI
 
-## Project [![Build status](https://ci.appveyor.com/api/projects/status/i1089han31pak2a3/branch/master?svg=true)](https://ci.appveyor.com/project/pava-14/aqa2-1-1/branch/master)
+## Project [![Build status](https://ci.appveyor.com/api/projects/status/i1089han31pak2a3/branch/selenium?svg=true)](https://ci.appveyor.com/project/pava-14/aqa2-1-1/branch/selenium)
